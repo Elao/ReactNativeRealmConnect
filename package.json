@@ -1,0 +1,29 @@
+{
+  "name": "@elao/react-native-realm-connect",
+  "version": "1.0.0",
+  "description": "Connect React Native components to Realm queries",
+  "main": "ReactNativeRealmConnect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elao/ReactNativeRealmConnect.git"
+  },
+  "keywords": [
+    "react-native",
+    "realm",
+    "connect"
+  ],
+  "author": "Thomas Jarrand <thomas.jarrand@gmail.com> (http://thomas.jarrand.fr)",
+  "license": "MIT",
+  "copyright": "Copyright 2018 élao",
+  "bugs": {
+    "url": "https://github.com/Elao/ReactNativeRealmConnect/issues"
+  },
+  "homepage": "https://github.com/Elao/ReactNativeRealmConnect#readme",
+  "dependencies": {
+    "react-native": "^0.53.3",
+    "realm": "^2.2.15"
+  }
+}
