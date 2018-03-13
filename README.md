@@ -1,8 +1,9 @@
 # React Native Realm Connect
 
-Connect React Native components to Realm queries
+Connect React Native components to Realm queries:
 
-Rely on [Realm Notifications](https://realm.io/docs/javascript/latest/#notifications).
+- Map a [proptype](https://reactjs.org/docs/typechecking-with-proptypes.html) to a [Realm query](https://realm.io/docs/javascript/latest/#queries) quite like you would map Redux store state to props with Redux [`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#inject-dispatch-and-todos).
+- Every time the Realm query [changes](https://realm.io/docs/javascript/latest/#notifications), your component will receive the updated props (and thus re-render).
 
 ## Installation
 
@@ -21,7 +22,7 @@ The `connectToQuery` method is similar to the `connect` method from redux (but n
 connectToQuery({
     [prop name]: [function that returns a Realm Results object],
     [...other props]
-})(MyWrappedComponent)
+})(MyWrappedComponent);
 ```
 
 ### List
@@ -75,6 +76,7 @@ import connectToQuery, { unique } from '@elao/react-native-realm-connect';
 
 class MyCat extends Component {
   static propTypes = {
+    userId: PropTypes.string.isRequired,
     cat: PropTypes.instanceOf(Cat).isRequired,
   };
 
@@ -86,6 +88,38 @@ class MyCat extends Component {
 }
 
 export default connectToQuery({
-  cat: unique(() => realm.objects('Cat').filtered('user.id == $0', 'me')),
+  cat: unique(props => realm.objects('Cat').filtered('user.id == $0', props.userId)),
 })(MyCat);
+```
+
+### Usage with Redux
+
+You can use a prop that comes from Redux state and use it in your Realm Query by chainning the two connectors:
+
+```javascript
+//...
+import { connect } from 'react-redux';
+import connectToQuery from '@elao/react-native-realm-connect';
+
+class FishBowl extends Component {
+  static propTypes = {
+    fishes: PropTypes.arrayOf(PropTypes.instanceOf(Fish)).isRequired,
+  };
+
+  render() {
+    const { fishes } = this.props;
+
+    return <FlatList data={fishes} /*...*/ />;
+  }
+}
+
+const mapStateToProps = state => ({
+    color: state.filter.fishColor,
+});
+
+const RealmConnectedFishBowl = connectToQuery({
+  dogs: props => realm.objects('Fish').filtered('color == $0', props.color),
+})(FishBowl)
+
+export default connect(mapStateToProps)(RealmConnectedFishBowl);
 ```
