@@ -22,7 +22,7 @@
     "url": "https://github.com/Elao/ReactNativeRealmConnect/issues"
   },
   "homepage": "https://github.com/Elao/ReactNativeRealmConnect#readme",
-  "dependencies": {
+  "peerDependencies": {
     "react-native": "^0.53.3",
     "realm": "^2.2.15"
   }
