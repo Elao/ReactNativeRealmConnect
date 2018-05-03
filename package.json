@@ -1,6 +1,6 @@
 {
   "name": "@elao/react-native-realm-connect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Connect React Native components to Realm queries",
   "main": "ReactNativeRealmConnect.js",
   "scripts": {
