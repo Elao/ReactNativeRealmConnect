@@ -92,6 +92,48 @@ export default connectToQuery({
 })(MyCat);
 ```
 
+### Extract result
+
+Get the `extract` filter:
+
+`import connectToQuery, { extract } from '@elao/react-native-realm-connect';`
+
+You can use `extract` for any other need, just provide a callback that will be applied on the `results` object and its return value will be passed as props.
+
+```javascript
+connectToQuery({
+    [prop name]: extract([function that returns a Realm Results object], [callback function],
+    [...other props]
+})(MyWrappedComponent)
+```
+
+Example:
+
+```javascript
+// ...
+import connectToQuery, { unique } from '@elao/react-native-realm-connect';
+
+class MyCat extends Component {
+  static propTypes = {
+    userId: PropTypes.string.isRequired,
+    age: PropTypes.number.isRequired,
+  };
+
+  render() {
+    const { age } = this.props;
+
+    return <Text>I'm {age} years old.</Text>;
+  }
+}
+
+export default connectToQuery({
+  age: extract(
+    props => realm.objects('User').filtered('id == $0', props.userId),
+    results => results ? results[0].age : null,
+  ),
+})(MyCat);
+```
+
 ### Usage with Redux
 
 You can use a prop that comes from Redux state and use it in your Realm Query by chainning the two connectors:

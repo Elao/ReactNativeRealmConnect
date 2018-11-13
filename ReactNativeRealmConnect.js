@@ -27,6 +27,19 @@ export function count(results) {
 }
 
 /**
+ * Attach an extractor to the query (returns the result of the given callback)
+ *
+ * @param {RealmResult} result
+ *
+ * @return {RealmResult}
+ */
+export function extract(results, extractor) {
+  results.extractor = extractor;
+
+  return results;
+}
+
+/**
  * Connect a React Native component to Realm queries
  *
  * @param {Object} queries
@@ -177,6 +190,11 @@ export default function connectToQuery(queries, shouldComponentUpdate = null) {
         // Count query
         if (queries[key].count) {
           return results.length;
+        }
+
+        // Apply extractor on query
+        if (queries[key].extractor) {
+          return queries[key].extractor(results);
         }
 
         // List query
