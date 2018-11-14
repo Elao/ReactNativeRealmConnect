@@ -102,7 +102,7 @@ You can use `extract` for any other need, just provide a callback that will be a
 
 ```javascript
 connectToQuery({
-    [prop name]: extract([function that returns a Realm Results object], [callback function],
+    [prop name]: extract([function that returns a Realm Results object with (props)], [callback function with (results, props) parameters],
     [...other props]
 })(MyWrappedComponent)
 ```
@@ -129,7 +129,7 @@ class MyCat extends Component {
 export default connectToQuery({
   age: extract(
     props => realm.objects('User').filtered('id == $0', props.userId),
-    results => results ? results[0].age : null,
+    (results, props) => results ? results[0].age : null,
   ),
 })(MyCat);
 ```

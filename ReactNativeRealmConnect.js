@@ -194,7 +194,7 @@ export default function connectToQuery(queries, shouldComponentUpdate = null) {
 
         // Apply extractor on query
         if (queries[key].extractor) {
-          return queries[key].extractor(results);
+          return queries[key].extractor(results, this.props);
         }
 
         // List query
